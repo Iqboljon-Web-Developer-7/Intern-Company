@@ -1,9 +1,11 @@
 import { Button, Form, Input, message } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import api from "../../axios/api";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: (values: { login: string; password: string }) =>
       api.post("/auths/sign-in", values),
@@ -11,6 +13,7 @@ const Login = () => {
       console.log("Response:", res);
       message.success("Вход успешен!");
       localStorage.setItem("token", res.data);
+      navigate("/");
     },
     onError: (error) => {
       console.error("Login Error:", error);

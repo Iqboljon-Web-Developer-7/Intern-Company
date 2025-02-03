@@ -1,9 +1,10 @@
 import { Button, Form, Input, message } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import api from "../../axios/api";
 
 const Register = () => {
+  const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: (values: {
       fullName: string;
@@ -13,6 +14,7 @@ const Register = () => {
     onSuccess: (res) => {
       console.log("Response:", res);
       message.success("Регистрация успешна!");
+      navigate("/auth/login");
     },
     onError: (error: any) => {
       console.error("Registration Error:", error);
